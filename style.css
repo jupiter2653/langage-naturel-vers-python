@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+HK:300&display=swap');body{
+	font-family: 'Noto Sans HK', sans-serif;
+}
+.form-control{
+	border: 1px #cbcb solid;
+	border-radius: 5px;
+	font-size: 1em;
+	margin-right: 2px;
+	margin-left: 2px;
+}
+h1{
+	text-align: center;
+}
+section{
+	display: flex;
+	width: 80%;
+	margin: auto;
+}
+#input, #output{
+	width: 50%;
+	padding: 10px;
+}
+#output textarea{
+	background-color: transparent;
+	resize: none;
+	width: 100%;
+	height: auto;
+	font-size: 1.1em;
+	padding: 10px;
+	min-height: calc(100% - 95px); 
+	/*Height of the container minus the height of h2 & the padding*/
+}
+#input h3{
+	font-size: 1em;
+	font-weight: bold;
+	margin: 0px;
+}
+#inputForm{
+	padding: 10px;
+	height: auto;
+	min-height: calc(100% - 95px); 
+	/*Height of the container minus the height of h2 & the padding*/
+}
+.element{
+	margin-bottom: 10px;
+}
+.lastElement{
+	margin-bottom: 0px !important;
+}
+.line{
+	display: flex;
+}
+.oneChar{
+	width: 15px;
+}
