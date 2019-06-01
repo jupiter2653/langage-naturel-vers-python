@@ -16,11 +16,11 @@ section{
 	width: 80%;
 	margin: auto;
 }
-#input, #output{
+#inputArea, #outputArea{
 	width: 50%;
 	padding: 10px;
 }
-#output textarea{
+#outputArea textarea{
 	background-color: transparent;
 	resize: none;
 	width: 100%;
@@ -30,7 +30,7 @@ section{
 	min-height: calc(100% - 95px); 
 	/*Height of the container minus the height of h2 & the padding*/
 }
-#input h3{
+#inputArea h3{
 	font-size: 1em;
 	font-weight: bold;
 	margin: 0px;
@@ -53,4 +53,18 @@ section{
 }
 .oneChar{
 	width: 15px;
+}
+.button-control{
+	border: 1px #cbcb solid;
+	border-radius: 5px;
+	font-size: 20px;
+	padding: 5px;
+	padding-top: 0px;
+	padding-bottom:0px;
+	height: 28px;
+	margin-top: 3px;
+	font-weight: bolder;
+	color: #656363;
+	background-color: white;
+	cursor: pointer;
 }
