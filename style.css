@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans+HK:300&display=swap');body{
 	font-family: 'Noto Sans HK', sans-serif;
 }
-.form-control{
+.form-control,.CodeMirror{
 	border: 1px #cbcb solid;
 	border-radius: 5px;
 	font-size: 1em;

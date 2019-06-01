@@ -5,6 +5,8 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap74.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<!--Code mirror syntax highlighter-->
+	<link rel="stylesheet" href="codemirror-5.47.0/lib/codemirror.css">
 </head>
 <body class="container">
 	<header>
@@ -64,8 +66,14 @@
 		</div>
 		<div id="output">
 			<h2>Python</h2>
-			<textarea class="form-control" readonly>a = int(input("> "))</textarea>
+			<textarea class="form-control" readonly id="outputArea">def coucou(lel):
+	return True
+</textarea>
 		</div>
 	</section>
+<!--Code mirror syntax highlighter-->
+<script src="codemirror-5.47.0/lib/codemirror.js"></script>
+<script src="codemirror-5.47.0/mode/python/python.js"></script>
+<script src="scripts.js"></script>
 </body>
 </html>
