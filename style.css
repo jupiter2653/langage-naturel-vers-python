@@ -49,6 +49,7 @@ section{
 }
 .line{
 	display: flex;
+	margin-left: 30px;
 }
 .oneChar{
 	width: 15px;
