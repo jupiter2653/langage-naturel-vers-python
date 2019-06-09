@@ -14,7 +14,12 @@ function addLine(type){
 }
 function delLastLine(type){
 	nbrLine = $("#"+type+" .line").length-1
-	$("#"+type + nbrLine).remove();
-	newNbrLine = $("#"+type+" .line").length-1
-	$("#"+type + newNbrLine).append('<button onclick="delLastLine(\''+type+'\')" class="button-control remove-button">&times;</button>')
+	if (nbrLine > 2) { //S'il y a plus de 2 ligne on supprime la dernière et on déplace la crois
+		$("#"+type + nbrLine).remove();
+		newNbrLine = $("#"+type+" .line").length-1
+		$("#"+type + newNbrLine).append('<button onclick="delLastLine(\''+type+'\')" class="button-control remove-button">&times;</button>')
+	}
+	else if(nbrLine  == 2){ //Si il y en a 2 on supprime juste la dernière
+		$("#"+type + nbrLine).remove();
+	}
 }
