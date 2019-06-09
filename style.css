@@ -1,15 +1,31 @@
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans+HK:300&display=swap');body{
 	font-family: 'Noto Sans HK', sans-serif;
 }
+body,html{
+	background-color: whitesmoke;
+	padding: 0px;
+	margin: 0px;
+}
 .form-control,.CodeMirror{
 	border: 1px #cbcb solid;
 	border-radius: 5px;
 	font-size: 1em;
 	margin-right: 2px;
 	margin-left: 2px;
+	background-color: white;
+}
+header{
+	background-color: #2565e6;
+	margin: 0px;
+	padding: 20px;
 }
 h1{
-	text-align: center;
+	margin: 0px;
+	font-size: 35px;
+}
+h1 img{
+	height:55px;
+	transform: translate(0,20px);
 }
 section{
 	display: flex;
@@ -18,7 +34,12 @@ section{
 }
 #inputArea, #outputArea{
 	width: 50%;
-	padding: 10px;
+	margin: 10px;
+}
+h2{
+	text-transform: uppercase;
+	font-size: 1.3em;
+	margin: 0px;
 }
 #outputArea textarea{
 	background-color: transparent;
