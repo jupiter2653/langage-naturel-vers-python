@@ -18,7 +18,7 @@
 				<div id="var" class="element">
 					<h3>Variables :</h3>
 					<div id="var1" class="line">
-						<input type="text" name="variables" class="oneChar form-control">
+						<input onchange="setNewVars()" type="text" name="variables" class="oneChar form-control" maxlength="1">
 						<span>est un(e)</span>
 						<select class="form-control">
 							<option value="int">Entier</option>
@@ -32,10 +32,7 @@
 					<h3>Entrée :</h3>
 					<div id="input1" class="line">
 						<span>Demander </span>
-						<select class="form-control">
-							<option value="A">A</option>
-							<option value="B">B</option>
-							<option value="C">C</option>
+						<select class="form-control var-list">
 						</select>
 					</div>
 					<button onclick="addLine('input')" class="button-control line">+</button>
@@ -43,11 +40,7 @@
 				<div class="element" id="process">
 					<h3>Traitement :</h3>
 					<div id="process1" class="line">
-						<select class="form-control" id="process1Var">
-							<option value="A">A</option>
-							<option value="B">B</option>
-							<option value="C">C</option>
-						</select>
+						<select class="form-control var-list" id="process1Var"></select>
 						<span>Prend la valeur</span>
 						<input type="text" name="calculus" class="form-control">
 					</div>
@@ -57,11 +50,7 @@
 					<h3>Sortie :</h3>
 					<div id="output1" class="line">
 						<span>Afficher </span>
-						<select class="form-control">
-							<option value="A">A</option>
-							<option value="B">B</option>
-							<option value="C">C</option>
-						</select>
+						<select class="form-control var-list"></select>
 					</div>
 					<button onclick="addLine('output')" class="button-control line">+</button>
 				</div>
