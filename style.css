@@ -68,3 +68,7 @@ section{
 	background-color: white;
 	cursor: pointer;
 }
+.remove-button{
+	height:25px;
+	font-size: 1.1em;
+}
