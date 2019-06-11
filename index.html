@@ -20,7 +20,7 @@
 					<div id="var1" class="line">
 						<input onchange="setNewVars()" type="text" name="variables" class="oneChar form-control" maxlength="1">
 						<span>est un(e)</span>
-						<select class="form-control">
+						<select class="form-control" onchange="setNewVars()">
 							<option value="int">Entier</option>
 							<option value="float">Flottant</option>
 							<option value="str">Chaine de charactère</option>
@@ -32,7 +32,7 @@
 					<h3>Entrée :</h3>
 					<div id="input1" class="line">
 						<span>Demander </span>
-						<select class="form-control var-list">
+						<select class="form-control var-list" onchange="setInput()">
 						</select>
 					</div>
 					<button onclick="addLine('input')" class="button-control line">+</button>

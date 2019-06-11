@@ -25,6 +25,8 @@ function delLastLine(type){
 	switch (type){
 		case 'var':
 			setNewVars()
+		case 'input':
+			setInput()
 	}
 }
 document["nameList"] = []
@@ -38,8 +40,32 @@ function setNewVars() {
 		tempName = $("#var"+i+" input").val()
 		tempType = $("#var"+i+" select").val()
 		document["nameList"].push([tempName,tempType])
-		CodeMirrorInstance.setValue(CodeMirrorInstance.getValue() + tempName + " = "+ tempType + "() \n")
-		$("#input .var-list, #process .var-list, #output .var-list").append('<option value="'+tempName+'">'+tempName+'</option>')
+		$("#input .var-list, #process .var-list, #output .var-list").append(
+			'<option value="'+tempName+'">'+tempName+'</option>')
 	}
-
+	writeCode()
+	setInput()
+}
+document['inputList'] = []
+function setInput(){
+	var nbrLine = $("#input .line").length-1
+	var tempIn
+	document['inputList'] = []
+	for(i=nbrLine;i>=1;i-=1){
+		tempIn = $("#input"+i+" select").val()
+		document['inputList'].push(tempIn)
+	}
+}
+function writeCode(){
+	var nbrVar = document["nameList"].length
+	for(i=0;i < nbrVar;i+=1){
+		if (document['inputList'].includes(document["nameList"][i][0])) {//is element in array
+			CodeMirrorInstance.setValue(
+				CodeMirrorInstance.getValue() + document["nameList"][i][0] + " = "+ document["nameList"][i][1] + "(input('> ')) \n")
+		}
+		else{
+			CodeMirrorInstance.setValue(
+				CodeMirrorInstance.getValue() + document["nameList"][i][0] + " = "+ document["nameList"][i][1] + "() \n")
+		}
+	}
 }
