@@ -35,7 +35,6 @@ function setNewVars() {
 	var tempName
 	$("#input .var-list option, #process .var-list option, #output .var-list option").remove()
 	document["nameList"] = []
-	CodeMirrorInstance.setValue("")
 	for(i=nbrLine;i>=1;i-=1){
 		tempName = $("#var"+i+" input").val()
 		tempType = $("#var"+i+" select").val()
@@ -43,7 +42,6 @@ function setNewVars() {
 		$("#input .var-list, #process .var-list, #output .var-list").append(
 			'<option value="'+tempName+'">'+tempName+'</option>')
 	}
-	writeCode()
 	setInput()
 }
 document['inputList'] = []
@@ -55,9 +53,11 @@ function setInput(){
 		tempIn = $("#input"+i+" select").val()
 		document['inputList'].push(tempIn)
 	}
+	writeCode()
 }
 function writeCode(){
 	var nbrVar = document["nameList"].length
+	CodeMirrorInstance.setValue("")
 	for(i=0;i < nbrVar;i+=1){
 		if (document['inputList'].includes(document["nameList"][i][0])) {//is element in array
 			CodeMirrorInstance.setValue(
