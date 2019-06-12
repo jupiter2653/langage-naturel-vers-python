@@ -21,26 +21,31 @@ body,html{
 	margin-left: 2px;
 	background-color: white;
 	box-shadow: 5px 5px 5px silver;
+	z-index: 2;
 }
 header{
 	background-color: #2565e6;
 	margin: 0px;
 	padding: 20px;
-	padding-top: 0px;
+	padding-top: 5px;
+	box-shadow: 5px 5px 5px silver;
 }
 h1{
 	margin: 0px;
-	font-size: 35px;
+	font-size: 25px;
+	text-align: center;
 }
 h1 img{
-	height:55px;
-	transform: translate(0,20px);
+	height:40px;
+	transform: translate(0,12px);
 }
 section{
+	z-index: 1;
 	display: flex;
 	width: 80%;
 	margin: auto;
 	padding: 20px;
+	padding-top: 0px;
 }
 #inputArea, #outputArea{
 	width: 50%;
