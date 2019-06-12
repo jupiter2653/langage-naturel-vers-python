@@ -40,9 +40,9 @@
 				<div class="element" id="process">
 					<h3>Traitement :</h3>
 					<div id="process1" class="line">
-						<select class="form-control var-list" id="process1Var"></select>
+						<select class="form-control var-list" id="process1Var"  onchange="setValues()"></select>
 						<span>Prend la valeur</span>
-						<input type="text" name="calculus" class="form-control">
+						<input type="text" name="calculus" class="form-control" onchange="setValues()">
 					</div>
 					<button onclick="addLine('process')" class="button-control line">+</button>
 				</div>
@@ -50,7 +50,7 @@
 					<h3>Sortie :</h3>
 					<div id="output1" class="line">
 						<span>Afficher </span>
-						<select class="form-control var-list"></select>
+						<select class="form-control var-list"  onchange="setOutput()"></select>
 					</div>
 					<button onclick="addLine('output')" class="button-control line">+</button>
 				</div>
