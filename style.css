@@ -22,6 +22,7 @@ body,html{
 	background-color: white;
 	box-shadow: 5px 5px 5px silver;
 	z-index: 2;
+	position: relative;
 }
 header{
 	background-color: #2565e6;
@@ -108,4 +109,9 @@ h2{
 .remove-button{
 	height:25px;
 	font-size: 1.1em;
+}
+.pull-right{
+	display: block;
+	position: absolute;
+	right: 10px;
 }

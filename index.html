@@ -18,9 +18,9 @@
 				<div id="var" class="element">
 					<h3>Variables :</h3>
 					<div id="var1" class="line">
-						<input onchange="setNewVars()" type="text" name="variables" class="oneChar form-control" maxlength="1">
+						<input onchange="setVariableLists();  writeCode();" type="text" name="variables" class="oneChar form-control" maxlength="1">
 						<span>est un(e)</span>
-						<select class="form-control" onchange="setNewVars()">
+						<select class="form-control" onchange="writeCode()">
 							<option value="int">Entier</option>
 							<option value="float">Flottant</option>
 							<option value="str">Chaine de charactère</option>
@@ -32,7 +32,7 @@
 					<h3>Entrée :</h3>
 					<div id="input1" class="line">
 						<span>Demander </span>
-						<select class="form-control var-list" onchange="setInput()">
+						<select class="form-control var-list" onchange="writeCode()">
 						</select>
 					</div>
 					<button onclick="addLine('input')" class="button-control line">+</button>
@@ -40,9 +40,9 @@
 				<div class="element" id="process">
 					<h3>Traitement :</h3>
 					<div id="process1" class="line">
-						<select class="form-control var-list" id="process1Var"  onchange="setValues()"></select>
+						<select class="form-control var-list" id="process1Var"  onchange="writeCode()"></select>
 						<span>Prend la valeur</span>
-						<input type="text" name="calculus" class="form-control" onchange="setValues()">
+						<input type="text" name="calculus" class="form-control" onchange="writeCode()">
 					</div>
 					<button onclick="addLine('process')" class="button-control line">+</button>
 				</div>
@@ -50,7 +50,11 @@
 					<h3>Sortie :</h3>
 					<div id="output1" class="line">
 						<span>Afficher </span>
-						<select class="form-control var-list"  onchange="setOutput()"></select>
+						<input type="text" class="form-control"  onchange="writeCode()" width="">
+						<select class="form-control pull-right swicher"  onchange="swichOutputMode(1)">
+							<option value="text" selected>Texte</option>
+							<option value="var">Variable</option>
+						</select>
 					</div>
 					<button onclick="addLine('output')" class="button-control line">+</button>
 				</div>

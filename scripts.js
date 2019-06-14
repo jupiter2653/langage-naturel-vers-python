@@ -9,8 +9,14 @@ function addLine(type){
 	$("#"+type + nbrLine).clone().insertAfter("#"+type + nbrLine);
 	var newNbrLine = $("#"+type+" .line").length-1
 	$("#"+type + nbrLine).attr("id",type + newNbrLine)
+	if (type == "output") {
+		$("#"+type + newNbrLine  + " .swicher").attr("onchange", "swichOutputMode(" + newNbrLine + ")")
+	}
 	$("#"+type + newNbrLine).append('<button onclick="delLastLine(\''+type+'\')" class="button-control remove-button">&times;</button>')
-	$( "input" ).change()
+	if (type == 'var') {
+		setVariableLists()
+	}
+	writeCode()
 }
 function delLastLine(type){
 	var nbrLine = $("#"+type+" .line").length-1
@@ -22,92 +28,76 @@ function delLastLine(type){
 	else if(nbrLine  == 2){ //Si il y en a 2 on supprime juste la dernière
 		$("#"+type + nbrLine).remove();
 	}
-	switch (type){
-		case 'var':
-			setNewVars()
-		case 'input':
-			setInput()
-		case 'process':
-			setValues()
-		case 'output':
-			setOutput()
-	}
-}
-document["nameList"] = []
-function setNewVars() {
-	var nbrLine = $("#var .line").length-1
-	var tempName
-	$("#input .var-list option, #process .var-list option, #output .var-list option").remove()
-	document["nameList"] = []
-	for(var i=nbrLine;i>=1;i-=1){
-		tempName = $("#var"+i+" input").val()
-		tempType = $("#var"+i+" select").val()
-		document["nameList"].push([tempName,tempType])
-		$("#input .var-list, #process .var-list, #output .var-list").append(
-			'<option value="'+tempName+'">'+tempName+'</option>')
-	}
-	setInput()
-    setValues()
-    setOutput()
-}
-document['inputList'] = []
-function setInput(){
-	var nbrLine = $("#input .line").length-1
-	var tempIn
-	document['inputList'] = []
-	for(var i=nbrLine;i>=1;i-=1){
-		tempIn = $("#input"+i+" select").val()
-		document['inputList'].push(tempIn)
+	if (type == 'var') {
+		setVariableLists()
 	}
 	writeCode()
 }
-document['processingList'] = []
-function setValues(){
-	var nbrLine = $("#process .line").length-1
-	var tempVal
-	document['processingList'] = []
-	for (var i=nbrLine;i>=1;i-=1) {
-		var tempVal = $("#process"+i+" input").val()
-		var tempVar = $("#process"+i+" select").val()
-		document['processingList'].push([tempVar,tempVal])
+function swichOutputMode(id){
+	if($('#output' + id + ' input').length == 1){
+		$('#output' + id + ' input').remove()
+		$('#output' + id + ' span').after('<select class="form-control var-list" onchange="writeCode()"></select>')
+		 setVariableLists()
+	} else if($('#output' + id + ' select').length == 2){
+		$('#output' + id + ' select')[0].remove()
+		$('#output' + id + ' span').after('<input type="text" class="form-control"  onchange="writeCode()" width="">')
+		 setVariableLists()
 	}
 	writeCode()
 }
-document['outputList'] = []
-function setOutput(){
-	var nbrLine = $("#output .line").length-1
-	var tempVal
-	document['outputList'] = []
-	for (var i=nbrLine;i>=1;i-=1) {
-		var tempVar = $("#output"+i+" select").val()
-		document['outputList'].push(tempVar)
+function getValues(type,formType){
+	arrayReturned = []
+	length = $("#"+type+" "+formType).length
+	var tempValue
+	for (var i=1;i<=length;i++) {
+		tempValue = $("#"+type+i+" "+formType).val()
+		if (tempValue != "") {
+			arrayReturned.push(tempValue)
+		}
 	}
-	writeCode()
+	return arrayReturned
+}
+function setVariableLists(){
+	$(".var-list option").remove()
+	for (var i = getValues('var','input').length - 1; i >= 0; i--) {
+		$(".var-list").append('<option value="'+getValues('var','input')[i]+'">'+getValues('var','input')[i]+'</option>')
+	}
+}
+function getLinesNumber(type){
+	return $("#"+ type + " .line").length-1
 }
 function writeCode(){
-	var nbrVar = document["nameList"].length
 	CodeMirrorInstance.setValue("") //We clean the output
-	for(var i=0;i < nbrVar;i+=1){ //For each variable
-		if (document['inputList'].includes(document["nameList"][i][0])) {//if element is input list
+	//Variables & output
+	for(var i = getLinesNumber("var"); i >= 1 ; i--){ //For each variable
+		console.log(i)
+		if (getValues("input","select").includes(getValues("var","input")[i-1])) {//if element is input list
 			CodeMirrorInstance.setValue(
-				CodeMirrorInstance.getValue() + document["nameList"][i][0] + " = "+ document["nameList"][i][1] + "(input('> ')) \n")
-		}
-		else{
+				CodeMirrorInstance.getValue() + $('#var'+i+' input').val() + " = "+ $('#var'+i+' select').val() + "(input('> ')) \n")
+		} else{
 			CodeMirrorInstance.setValue(
-				CodeMirrorInstance.getValue() + document["nameList"][i][0] + " = "+ document["nameList"][i][1] + "() \n")
+				CodeMirrorInstance.getValue() + $('#var'+i+' input').val() + " = "+ $('#var'+i+' select').val() + "() \n")
 		}
 	}
-	for (var i = 0; i < document['processingList'].length; i++) { //Foreach process element
+	//Process
+	for (var i = getLinesNumber("process"); i >=1 ; i--) { //Foreach process element
 		CodeMirrorInstance.setValue(
-				CodeMirrorInstance.getValue() + document['processingList'][i][0] + " = "+ document['processingList'][i][1] + " \n")	
+				CodeMirrorInstance.getValue() + $('#process'+i+' select').val() + " = "+ $('#process'+i+' input').val() + " \n") // To improve
 	}
-	for (var i = 0; i < document['outputList'].length; i++) { //foreach output element
-		CodeMirrorInstance.setValue(
-				CodeMirrorInstance.getValue() + "print("+ document['outputList'][i][0] + ") \n")	
+	//Output
+	for (var i = getLinesNumber("output"); i >=1 ; i--) { //foreach output element
+		if($('#output' + i + ' input').length == 1){
+			CodeMirrorInstance.setValue(
+				CodeMirrorInstance.getValue() + "print('"+ $('#output'+i+' input').val() + "') \n")
+		} else if($('#output' + i + ' select').length == 2){
+			CodeMirrorInstance.setValue(
+				CodeMirrorInstance.getValue() + "print("+ $('#output'+i+' select').val() + ") \n")
+		}
 	}
 }
 $(function() {
-    setNewVars()
-    setValues()
-    setOutput()
+	setVariableLists();
+	writeCode();
+	//Making sure everithing is coordinated in the ouput
+	$("#output .swicher").val("text")
 });
