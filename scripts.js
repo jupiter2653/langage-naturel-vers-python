@@ -98,6 +98,11 @@ function writeCode(){
 		}
 	}
 }
+function toggleMenu(){
+	$("nav").animate({ 
+		left: parseInt($("nav").css('left'),10) == 0 ? -$("nav").outerWidth() : 0 
+	});
+}
 $(function() {
 	setVariableLists();
 	writeCode();
