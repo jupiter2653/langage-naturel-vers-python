@@ -70,26 +70,29 @@ function writeCode(){
 	CodeMirrorInstance.setValue("") //We clean the output
 	//Variables & output
 	for(var i = getLinesNumber("var"); i >= 1 ; i--){ //For each variable
-		console.log(i)
-		if (getValues("input","select").includes(getValues("var","input")[i-1])) {//if element is input list
-			CodeMirrorInstance.setValue(
-				CodeMirrorInstance.getValue() + $('#var'+i+' input').val() + " = "+ $('#var'+i+' select').val() + "(input('> ')) \n")
-		} else{
-			CodeMirrorInstance.setValue(
-				CodeMirrorInstance.getValue() + $('#var'+i+' input').val() + " = "+ $('#var'+i+' select').val() + "() \n")
+		if ($("#var" + i + " input").val() && $("#var" + i + " input").val()  != '') {
+			if (getValues("input","select").includes(getValues("var","input")[i-1])) {//if element is input list
+				CodeMirrorInstance.setValue(
+					CodeMirrorInstance.getValue() + $('#var'+i+' input').val() + " = "+ $('#var'+i+' select').val() + "(input('> ')) \n")
+			} else{
+				CodeMirrorInstance.setValue(
+					CodeMirrorInstance.getValue() + $('#var'+i+' input').val() + " = "+ $('#var'+i+' select').val() + "() \n")
+			}
 		}
 	}
 	//Process
 	for (var i = getLinesNumber("process"); i >=1 ; i--) { //Foreach process element
-		CodeMirrorInstance.setValue(
-				CodeMirrorInstance.getValue() + $('#process'+i+' select').val() + " = "+ $('#process'+i+' input').val() + " \n") // To improve
+		if ($("#process" + i + " input").val() && $("#process" + i + " input").val()  != '' && $("#process" + i + " select").val() != null) {
+			CodeMirrorInstance.setValue(
+					CodeMirrorInstance.getValue() + $('#process'+i+' select').val() + " = "+ $('#process'+i+' input').val() + " \n") // To improve
+		}
 	}
 	//Output
 	for (var i = getLinesNumber("output"); i >=1 ; i--) { //foreach output element
-		if($('#output' + i + ' input').length == 1){
+		if($('#output' + i + ' input').length == 1 && $('#output' + i + ' input').val() && $('#output' + i + ' input').val() != ""){
 			CodeMirrorInstance.setValue(
 				CodeMirrorInstance.getValue() + "print('"+ $('#output'+i+' input').val() + "') \n")
-		} else if($('#output' + i + ' select').length == 2){
+		} else if($('#output' + i + ' select').length == 2 && $("#output" + i + " select").val() != null){
 			CodeMirrorInstance.setValue(
 				CodeMirrorInstance.getValue() + "print("+ $('#output'+i+' select').val() + ") \n")
 		}
