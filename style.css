@@ -14,23 +14,26 @@ body,html{
 	color: white;
 	padding: 0px;
 	height: 40px;
+	z-index: 10000;
 }
 #menu-openner i{
 	font-size: 40px;
 }
 nav{
 	position: absolute;
-	top: 72px;
+	top: 69px;
 	z-index: 1000;
 	background-color: white;
-	height: calc(100vh - 75px);
+	height: calc(100vh - 69px);
 	width: 300px;
 	border: 1px #cbcb solid;
 	box-shadow: 2px 2px 10px silver;
 }
 nav ul{
-	margin-top: 30px;
-	padding-left: 20px;
+	margin-top: 20px;
+	margin-left: 20px;
+	padding-left: 0px;
+	border-bottom: 1px #cbcb solid;
 }
 nav a{
 	color: black !important;
@@ -41,11 +44,23 @@ nav h2{
 	margin-top: 10px;
 	font-size: 1.8em;
 }
-nav li{
-	border-top: 1px #cbcb solid;
+nav li {
 	list-style-type: none;
 	text-align: left;
+}
+nav li a{
+	display: block;
+	border-top: 1px #cbcb solid;
 	padding: 15px;
+	padding-left: 20px;
+	transition : padding 500ms;
+}
+nav li a:hover{
+	border-top: 0px #cbcb solid;
+	/*background-color: #387aff;*/
+	background-image: linear-gradient(110deg, rgba(0,0,0,0) 19px, #387aff 0%);
+	color: white !important;
+	padding-left: 30px;
 }
 .form-control{
 	border: 1px #cbcb solid;
@@ -68,18 +83,21 @@ nav li{
 header{
 	background-color: #2565e6;
 	margin: 0px;
-	padding: 20px;
+	padding-bottom: 10px;
 	padding-top: 5px;
-	/*box-shadow: 5px 5px 5px silver;*/
 	position: relative;
+	z-index: 1000;
 }
 h1{
 	margin: 0px;
-	font-size: 25px;
+	font-size: 30px;
 	text-align: center;
+	transform: translate(0,-5px);
+	margin-left: 70px;
+	margin-right: 70px;
 }
 h1 img{
-	height:40px;
+	height:45px;
 	transform: translate(0,12px);
 }
 section{
@@ -156,4 +174,20 @@ h2{
 	display: block;
 	position: absolute;
 	right: 10px;
+}
+@media screen and (max-width: 1000px) {
+	section{
+		display: block;
+	}
+	#inputArea, #outputArea{
+		width: 100%;
+	}
+}
+@media screen and (max-width: 500px){
+	h1{
+		font-size: 25px;
+	}
+	h1 img{
+		height: 35px;
+	}
 }
