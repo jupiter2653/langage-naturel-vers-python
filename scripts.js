@@ -99,6 +99,15 @@ function writeCode(){
 	}
 }
 function toggleMenu(){
+	if ($( window ).scrollTop() > $("header").outerHeight()) {
+ 		$("nav").css({
+			top: 0
+		})
+ 	} else{
+ 		$("nav").css({
+			top: $("header").outerHeight()-$( window ).scrollTop() //Makes the menu stick the header
+		})
+ 	}
 	$("nav").animate({ 
 		left: parseInt($("nav").css('left'),10) == 0 ? -$("nav").outerWidth() : 0 
 	});
@@ -108,4 +117,20 @@ $(function() {
 	writeCode();
 	//Making sure everithing is coordinated in the ouput
 	$("#output .swicher").val("text")
+});
+$( window ).resize(function() {
+ 	$("nav").css({
+		top: $("header").outerHeight()
+	})
+});
+$( window ).scroll(function() {
+ 	if ($( window ).scrollTop() > $("header").outerHeight()) {
+ 		$("nav").css({
+			top: 0
+		})
+ 	} else{
+ 		$("nav").css({
+			top: $("header").outerHeight()-$( window ).scrollTop() //Makes the menu stick the header
+		})
+ 	}
 });
