@@ -11,6 +11,8 @@ function addLine(type){
 	$("#"+type + nbrLine).attr("id",type + newNbrLine)
 	if (type == "output") {
 		$("#"+type + newNbrLine  + " .swicher").attr("onchange", "swichOutputMode(" + newNbrLine + ")")
+	} else if (type == "process") {
+		$("#"+type + newNbrLine  + " .element-adder").attr("onclick", "addProcessElement(" + newNbrLine + ")")
 	}
 	$("#"+type + newNbrLine).append('<button onclick="delLastLine(\''+type+'\')" class="button-control remove-button">&times;</button>')
 	if (type == 'var') {
@@ -82,9 +84,16 @@ function writeCode(){
 	}
 	//Process
 	for (var i = getLinesNumber("process"); i >=1 ; i--) { //Foreach process element
-		if ($("#process" + i + " input").val() && $("#process" + i + " input").val()  != '' && $("#process" + i + " select").val() != null) {
+		if($("#process" + i + " input").val() && $("#process" + i + " input").val()  != ''){
 			CodeMirrorInstance.setValue(
-					CodeMirrorInstance.getValue() + $('#process'+i+' select').val() + " = "+ $('#process'+i+' input').val() + " \n") // To improve
+						CodeMirrorInstance.getValue() + $('#process'+i+' select').val() + " = ") // To improve
+			for (var j = 0; j < $("#process" + i + " .process-element").length ; j++) {
+				$($("#process" + i + " .process-element")[j])
+				CodeMirrorInstance.setValue(
+						CodeMirrorInstance.getValue() + $($("#process" + i + " .process-element")[j]).val())
+			}
+			CodeMirrorInstance.setValue(
+						CodeMirrorInstance.getValue() + "\n")
 		}
 	}
 	//Output
@@ -112,6 +121,39 @@ function toggleMenu(){
 		left: parseInt($("nav").css('left'),10) == 0 ? -$("nav").outerWidth() : 0 
 	});
 }
+function deleteIfNull(list){
+	console.log(list.val())
+	if (list.val() == "") {
+		if (list.next().is("input")) {
+			list.next().remove()
+		}
+		list.remove()
+	}
+}
+function checkVariable(input){
+	if (!(getValues("var","input").includes(input.val())) && isNaN(input.val()) && input.val() != ""){
+		input.css({
+			color:"red",
+			fontWeight: "bold"
+		});
+	}
+	else{
+		input.css({
+			color:"black",
+			fontWeight: "normal"
+		});
+	}
+	
+}
+function addProcessElement(id){
+	var lastElement = $(last_of_array($(".process-element")))
+	if (lastElement.is("select")) {
+		$('<input type="text" name="calculus" class="form-control short process-element" onchange="writeCode(); checkVariable($(this))">').insertBefore("#process" + id + " .element-adder");
+	} else{
+		$('<select class="form-control process-element" onchange="writeCode(); deleteIfNull($(this))"><option value=""></option><option value="+">+</option><option value="-">-</option><option value="*">&times;</option><option value="/">&divide;</option></select>'
+			).insertBefore("#process" + id + " .element-adder");
+	}
+}
 $(function() {
 	setVariableLists();
 	writeCode();
@@ -134,3 +176,5 @@ $( window ).scroll(function() {
 		})
  	}
 });
+
+function last_of_array(array){return array[array.length-1]}

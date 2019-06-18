@@ -176,6 +176,9 @@ h2{
 	position: absolute;
 	right: 10px;
 }
+.short{
+	width: 30px;
+}
 @media screen and (max-width: 1000px) {
 	section{
 		display: block;
