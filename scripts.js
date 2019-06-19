@@ -84,7 +84,7 @@ function writeCode(){
 	}
 	//Process
 	for (var i = getLinesNumber("process"); i >=1 ; i--) { //Foreach process element
-		if($("#process" + i + " input").val() && $("#process" + i + " input").val()  != ''){
+		if($("#process" + i + " select").val() && $("#process" + i + " select").val()  != null){
 			CodeMirrorInstance.setValue(
 						CodeMirrorInstance.getValue() + $('#process'+i+' select').val() + " = ") // To improve
 			for (var j = 0; j < $("#process" + i + " .process-element").length ; j++) {
