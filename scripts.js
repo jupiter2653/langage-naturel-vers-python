@@ -22,7 +22,7 @@ function addLine(type){
 }
 function delLastLine(type){
 	var nbrLine = $("#"+type+" .line").length-1
-	if (nbrLine > 2) { //S'il y a plus de 2 ligne on supprime la dernière et on déplace la crois
+	if (nbrLine > 2) { //S'il y a plus de 2 ligne on supprime la dernière et on déplace la croix
 		$("#"+type + nbrLine).remove();
 		var newNbrLine = $("#"+type+" .line").length-1
 		$("#"+type + newNbrLine).append('<button onclick="delLastLine(\''+type+'\')" class="button-control remove-button">&times;</button>')
@@ -136,12 +136,14 @@ function checkVariable(input){
 			color:"red",
 			fontWeight: "bold"
 		});
+		input.attr("title","Cette variable n'a pas été déclarée");
 	}
 	else{
 		input.css({
 			color:"black",
 			fontWeight: "normal"
 		});
+		input.attr("title","");
 	}
 	
 }
