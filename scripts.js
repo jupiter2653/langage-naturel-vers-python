@@ -70,39 +70,49 @@ function getLinesNumber(type){
 function writeCode(){
 	CodeMirrorInstance.setValue("") //We clean the output
 	//Variables & input
-	for(var i = getLinesNumber("var"); i >= 1 ; i--){ //For each variable
-		if ($("#var" + i + " input").val() && $("#var" + i + " input").val()  != '') {
-			if (getValues("input","select").includes(getValues("var","input")[i-1])) {//if element is input list
+	for(var i = 0; i < getLinesNumber("var") ; i++){ //For each variable
+		console.log(i)
+		if ($("#" + get_line_id(i,"var") + " input").val() && $("#" + get_line_id(i,"var") + " input").val()  != '') {
+			console.log("s")
+			if (getValues("input","select").includes($("#" + get_line_id(i,"var") + " input").val())) {//if element is input list
 				CodeMirrorInstance.setValue(
-					CodeMirrorInstance.getValue() + $('#var'+i+' input').val() + " = "+ $('#var'+i+' select').val() + "(input('> ')) \n")
+					CodeMirrorInstance.getValue() + $("#" + get_line_id(i,"var") + " input").val() + " = "+ $("#" + get_line_id(i,"var") + " select").val() + "(input('> ')) \n")
 			} else{
 				CodeMirrorInstance.setValue(
-					CodeMirrorInstance.getValue() + $('#var'+i+' input').val() + " = "+ $('#var'+i+' select').val() + "() \n")
+					CodeMirrorInstance.getValue() + $("#" + get_line_id(i,"var") + " input").val() + " = " + $("#" + get_line_id(i,"var") + " select").val() + "() \n")
 			}
 		}
 	}
 	//Process
-	for (var i = getLinesNumber("process"); i >=1 ; i--) { //Foreach process element
-		if($("#process" + i + " select").val() && $("#process" + i + " select").val()  != null){
+	for(var i = 0; i < getLinesNumber("process") ; i++){ //Foreach process element
+		if($("#" + get_line_id(i,"process") + " select").val() && $("#" + get_line_id(i,"process") + " select").val()  != null){
 			CodeMirrorInstance.setValue(
-						CodeMirrorInstance.getValue() + $('#process'+i+' select').val() + " = ") // To improve
-			for (var j = 0; j < $("#process" + i + " .process-element").length ; j++) {
-				$($("#process" + i + " .process-element")[j])
+						CodeMirrorInstance.getValue() + $("#" + get_line_id(i,"process") + " select").val() + " = ") // To improve
+
+			for (var j = 0; j < $("#"+ get_line_id(i,"process") + " .process-element").length ; j++) {
+				/*$($("#process" + i + " .process-element")[j])*/
 				CodeMirrorInstance.setValue(
-						CodeMirrorInstance.getValue() + $($("#process" + i + " .process-element")[j]).val())
+						CodeMirrorInstance.getValue() + $($("#" + get_line_id(i,"process") + " .process-element")[j]).val())
 			}
+
 			CodeMirrorInstance.setValue(
 						CodeMirrorInstance.getValue() + "\n")
 		}
 	}
 	//Output
-	for (var i = getLinesNumber("output"); i >=1 ; i--) { //foreach output element
-		if($('#output' + i + ' input').length == 1 && $('#output' + i + ' input').val() && $('#output' + i + ' input').val() != ""){
+	for(var i = 0; i < getLinesNumber("output") ; i++){ //foreach output element
+		if($('#' + get_line_id(i,"output") + ' input').length == 1 //If it's text
+			&& $('#' + get_line_id(i,"output") + ' input').val() 
+			&& $('#' + get_line_id(i,"output") + ' input').val() != "")
+		{ 
 			CodeMirrorInstance.setValue(
-				CodeMirrorInstance.getValue() + "print('"+ $('#output'+i+' input').val() + "') \n")
-		} else if($('#output' + i + ' select').length == 2 && $("#output" + i + " select").val() != null){
+				CodeMirrorInstance.getValue() + "print('"+ $('#' + get_line_id(i,"output") + ' input').val() + "') \n")
+		} 
+		else if($('#' + get_line_id(i,"output") + ' select').length == 2 //Else if it's a variable
+			&& $('#' + get_line_id(i,"output") + ' select').val() != null)
+		{ 
 			CodeMirrorInstance.setValue(
-				CodeMirrorInstance.getValue() + "print("+ $('#output'+i+' select').val() + ") \n")
+				CodeMirrorInstance.getValue() + "print("+ $('#' + get_line_id(i,"output") + ' select').val() + ") \n")
 		}
 	}
 }
@@ -157,11 +167,15 @@ function addProcessElement(id){
 }
 $(function() {
 	setVariableLists();
-	writeCode();
+	//Making elements tiles sortable
 	$('.element').sortable();
 	//Making sure everithing is coordinated in the ouput
 	$("#output .swicher").val("text")
 	$('.CodeMirror').height($('#inputForm').outerHeight()-2)
+	$( ".element" ).sortable({
+  		update: function( event, ui ) {writeCode();}
+	});
+	writeCode();
 });
 $( window ).resize(function() {
  	$("nav").css({
@@ -182,3 +196,6 @@ $( window ).scroll(function() {
 });
 
 function last_of_array(array){return array[array.length-1]}
+
+function get_line_id(index, type){console.log(index + " " + type); return $("#"+type).sortable("toArray")[index]}
+/*function get_line_id(index, type){console.log(index + " " + type); return "var1"}*/
