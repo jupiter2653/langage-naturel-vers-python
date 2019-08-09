@@ -4,31 +4,30 @@ var CodeMirrorInstance = CodeMirror.fromTextArea(textArea,{mode : "text/x-python
 
 
 function addLine(type){
-	var nbrLine = $("#"+type+" .line").length-1
-	$("#"+type + nbrLine+" .remove-button").remove();
+	var nbrLine = $("#"+type+" .line").length
+	$("#"+type +" .remove-button").remove();
 	$("#"+type + nbrLine).clone().insertAfter("#"+type + nbrLine);
-	var newNbrLine = $("#"+type+" .line").length-1
+	var newNbrLine = $("#"+type+" .line").length
 	$("#"+type + nbrLine).attr("id",type + newNbrLine)
 	if (type == "output") {
 		$("#"+type + newNbrLine  + " .swicher").attr("onchange", "swichOutputMode(" + newNbrLine + ")")
 	} else if (type == "process") {
 		$("#"+type + newNbrLine  + " .element-adder").attr("onclick", "addProcessElement(" + newNbrLine + ")")
 	}
-	$("#"+type + newNbrLine).append('<button onclick="delLastLine(\''+type+'\')" class="button-control remove-button">&times;</button>')
+	$("#"+type).append('<button onclick="delLastLine(\''+type+'\')" class="button-control remove-button">&times;</button>')
 	if (type == 'var') {
 		setVariableLists()
 	}
 	writeCode()
 }
 function delLastLine(type){
-	var nbrLine = $("#"+type+" .line").length-1
-	if (nbrLine > 2) { //S'il y a plus de 2 ligne on supprime la dernière et on déplace la croix
+	var nbrLine = $("#"+type+" .line").length
+	if (nbrLine > 2) { //S'il y a plus de 2 ligne on supprime la dernière
 		$("#"+type + nbrLine).remove();
-		var newNbrLine = $("#"+type+" .line").length-1
-		$("#"+type + newNbrLine).append('<button onclick="delLastLine(\''+type+'\')" class="button-control remove-button">&times;</button>')
 	}
-	else if(nbrLine  == 2){ //Si il y en a 2 on supprime juste la dernière
+	else if(nbrLine  == 2){ //Si il y en a 2 on supprime juste la dernière et la croix
 		$("#"+type + nbrLine).remove();
+		$("#"+type +" .remove-button").remove();
 	}
 	if (type == 'var') {
 		setVariableLists()
@@ -66,11 +65,11 @@ function setVariableLists(){
 	}
 }
 function getLinesNumber(type){
-	return $("#"+ type + " .line").length-1
+	return $("#"+ type + " .line").length
 }
 function writeCode(){
 	CodeMirrorInstance.setValue("") //We clean the output
-	//Variables & output
+	//Variables & input
 	for(var i = getLinesNumber("var"); i >= 1 ; i--){ //For each variable
 		if ($("#var" + i + " input").val() && $("#var" + i + " input").val()  != '') {
 			if (getValues("input","select").includes(getValues("var","input")[i-1])) {//if element is input list
@@ -159,13 +158,16 @@ function addProcessElement(id){
 $(function() {
 	setVariableLists();
 	writeCode();
+	$('.element').sortable();
 	//Making sure everithing is coordinated in the ouput
 	$("#output .swicher").val("text")
+	$('.CodeMirror').height($('#inputForm').outerHeight()-2)
 });
 $( window ).resize(function() {
  	$("nav").css({
 		top: $("header").outerHeight()
 	})
+	$('.CodeMirror').height($('#inputForm').outerHeight()-2)
 });
 $( window ).scroll(function() {
  	if ($( window ).scrollTop() > $("header").outerHeight()) {

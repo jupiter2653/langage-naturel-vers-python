@@ -142,13 +142,30 @@ h2{
 }
 .element{
 	margin-bottom: 10px;
+	position: relative;
 }
 .lastElement{
 	margin-bottom: 0px !important;
 }
 .line{
 	display: flex;
+	border: 1px #cbcb solid;
+	border-radius: 5px;
+	padding: 3px;
+	margin: 3px;
 	margin-left: 30px;
+	font-size: 14px;
+	padding-right:10px;
+	position: relative;
+}
+.line::after{
+	content: "more_vert";
+	font-family: 'Material Icons';
+	font-size: 17px;
+	color: grey;
+	position: absolute;
+	right:2px;
+	cursor:move;
 }
 .oneChar{
 	width: 15px;
@@ -170,6 +187,9 @@ h2{
 .remove-button{
 	height:25px;
 	font-size: 1.1em;
+	position:absolute;
+	top: -1px;
+	right:5px;
 }
 .pull-right{
 	display: block;
@@ -178,6 +198,16 @@ h2{
 }
 .short{
 	width: 30px;
+}
+.element-adder{
+	height:19px;
+	border: 1px #cbcb solid;
+	border-radius: 3px;
+	font-size: 15px;
+	padding: 2px;
+	padding-top: 0px;
+	padding-bottom:0px;
+	margin-top: 1px;
 }
 @media screen and (max-width: 1000px) {
 	section{

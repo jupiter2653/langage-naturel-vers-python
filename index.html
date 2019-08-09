@@ -33,8 +33,8 @@
 		<div id="inputArea">
 			<h2>Langage Naturel</h2>
 			<div id="inputForm">
+				<h3>Variables :</h3>
 				<div id="var" class="element">
-					<h3>Variables :</h3>
 					<div id="var1" class="line">
 						<input onchange="setVariableLists();  writeCode();" type="text" name="variables" class="oneChar form-control" maxlength="1">
 						<span>est un(e)</span>
@@ -44,19 +44,19 @@
 							<option value="str">Chaine de charactère</option>
 						</select>
 					</div>
-					<button onclick="addLine('var')" class="button-control line">+</button>
+					<button onclick="addLine('var')" class="button-control line-adder">+</button>
 				</div>
+				<h3>Entrée :</h3>
 				<div id="input" class="element">
-					<h3>Entrée :</h3>
 					<div id="input1" class="line">
 						<span>Demander </span>
 						<select class="form-control var-list" onchange="writeCode()">
 						</select>
 					</div>
-					<button onclick="addLine('input')" class="button-control line">+</button>
+					<button onclick="addLine('input')" class="button-control line-adder">+</button>
 				</div>
+				<h3>Entrée :</h3>
 				<div class="element" id="process">
-					<h3>Traitement :</h3>
 					<div id="process1" class="line">
 						<select class="form-control var-list" id="process1Var"  onchange="writeCode()"></select>
 						<span>Prend la valeur</span>
@@ -68,21 +68,22 @@
 							<option value="*">&times;</option>
 							<option value="/">&divide;</option>
 						</select>
+						<input type="text" name="calculus" class="form-control short process-element" onchange="writeCode(); checkVariable($(this))">
 						<button onclick="addProcessElement('1'); writeCode();" class="button-control element-adder">+</button>
 					</div>
-					<button onclick="addLine('process')" class="button-control line">+</button>
+					<button onclick="addLine('process')" class="button-control line-adder">+</button>
 				</div>
+				<h3>Sortie :</h3>
 				<div class="element lastElement" id="output">
-					<h3>Sortie :</h3>
 					<div id="output1" class="line">
 						<span>Afficher </span>
-						<input type="text" class="form-control"  onchange="writeCode()">
-						<select class="form-control pull-right swicher"  onchange="swichOutputMode(1)">
+						<input type="text" class="form-control"  onchange="writeCode()"> 
+						<select class="form-control swicher"  onchange="swichOutputMode(1)">
 							<option value="text" selected>Texte</option>
 							<option value="var">Variable</option>
 						</select>
 					</div>
-					<button onclick="addLine('output')" class="button-control line">+</button>
+					<button onclick="addLine('output')" class="button-control line-adder">+</button>
 				</div>
 			</div>
 		</div>
@@ -97,6 +98,10 @@
 <script
 	src="https://code.jquery.com/jquery-3.4.1.min.js"
 	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+	crossorigin="anonymous"></script>
+<script
+	src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
+	integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
 	crossorigin="anonymous"></script>
 <script src="scripts.js"></script>
 </body>
