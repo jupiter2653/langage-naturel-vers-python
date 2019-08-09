@@ -28,4 +28,5 @@ You can contact me by mail : jupiter653.jupiter653@gmail.com
 This project is under a GNU license. More details [here](https://github.com/jupiter2653/langage-naturel-vers-python/blob/master/LICENSE)
 
 ## Dependencies
-Text coloration is made by Codemirror version 5.47.0. More details [here](https://codemirror.net/)
+Text coloration is made by Codemirror version 5.47.0. More details [here](https://codemirror.net/).<br/>
+Javascript library : JQuery version 3.4.1. More details [here](https://jquery.com/).
