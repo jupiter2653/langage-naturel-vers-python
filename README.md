@@ -10,15 +10,18 @@ Just click [here](https://jupiter2653.github.io/langage-naturel-vers-python) and
 The form is supposed to be organized as the officials algorithms but there might be some slight differences. If the difference is too important, you can post an issue and I'll fix the problem.
 
 ### Aide (french)
-![tutorial image](https://user-images.githubusercontent.com/26854717/59550648-5e6e3980-8f6d-11e9-914f-e96c2e4c32ed.png)
-* 1 -> Entrez ici le nom de votre variable
-* 2 -> Entrez ici le type de la variable (entier, flottant ou chaines de caractères)
-* 3 -> Quand vous cliquez sur un bouton +, une nouvelle ligne apparait. Pour la faire disparaitre, cliquez sur la croix qui sera affichée
-* 4 -> Entrez ici le nom de la variable que vous voulez faire entrer à l'utilisateur
-* 5 -> Entrez ici le nom de la variable dont vous voulez modifier la valeur
-* 6 -> Entrez ici la nouvelle valeur de la variable. Cette valeur peut être un calcul (le signe fois se note \* et diviser \/)
-* 7 -> Vous pouvez ici modifier le genre de données que vous voulez afficher en sortie
-* 8 -> Entrez ici le nom de la variable ou le texte que vous voulez afficher en sortie
+![Aide translator](https://user-images.githubusercontent.com/26854717/62822919-928b6280-bb8a-11e9-8c9a-094e31408079.png)
+* 1 -> Entrez ici le nom de votre variable.
+* 2 -> Entrez ici le type de la variable (entier, flottant ou chaines de caractères).
+* 3 -> Quand vous cliquez sur un bouton +, une nouvelle ligne apparait.
+* 4 -> Entrez ici le nom d'une variable que vous voulez faire entrer à l'utilisateur.
+* 5 -> Entrez ici le nom de la variable dont vous voulez modifier la valeur.
+* 6 -> Tapez ici le nom d'une variable ou un nombre. Si c'est une variable et que celle-ci n'est pas définie, elle sera en rouge.
+* 7 -> Choisissez ici le type d'opération que vous voulez effectuer (addition, soustraction, multiplication ou division).
+* 8 -> Cliquez ici pour ajouter un élément à l'opération.
+* 9 -> Entez ici le texte si l'option texte a été choisie (cf. 10) ou la variable que vous voulez afficher en sortie .
+* 10 -> Vous pouvez ici modifier le genre de données que vous voulez afficher en sortie.
+* 11 -> Cliquez ici pour supprimer une ligne.
 
 
 ## Contact
@@ -29,4 +32,5 @@ This project is under a GNU license. More details [here](https://github.com/jupi
 
 ## Dependencies
 Text coloration is made by Codemirror version 5.47.0. More details [here](https://codemirror.net/).<br/>
-Javascript library : JQuery version 3.4.1. More details [here](https://jquery.com/).
+JQuery version 3.4.1. More details [here](https://jquery.com/).<br/>
+JqueryUI version 1.12.0. More details [here](https://jqueryui.com/).
