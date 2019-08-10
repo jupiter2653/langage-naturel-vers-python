@@ -4,21 +4,38 @@ var CodeMirrorInstance = CodeMirror.fromTextArea(textArea,{mode : "text/x-python
 
 
 function addLine(type){
-	var nbrLine = $("#"+type+" .line").length
-	$("#"+type +" .remove-button").remove();
-	$("#"+type + nbrLine).clone().insertAfter("#"+type + nbrLine);
-	var newNbrLine = $("#"+type+" .line").length
-	$("#"+type + nbrLine).attr("id",type + newNbrLine)
-	if (type == "output") {
-		$("#"+type + newNbrLine  + " .swicher").attr("onchange", "swichOutputMode(" + newNbrLine + ")")
-	} else if (type == "process") {
-		$("#"+type + newNbrLine  + " .element-adder").attr("onclick", "addProcessElement(" + newNbrLine + ")")
+	const lines = {
+		var : '<div id="varNO" class="line item"><input onchange="setVariableLists();  writeCode();" type="text" name="variables" class="oneChar form-control" maxlength="1"><span>est un(e)</span><select class="form-control" onchange="writeCode()"><option value="int">Entier</option><option value="float">Flottant</option><option value="str">Chaine de charactère</option></select><button onclick="delLine($(this))" class="button-control remove-button">×</button></div>',
+		input : '<div id="inputNO" class="line item"><span>Demander </span><select class="form-control var-list" onchange="writeCode()"></select><button onclick="delLine($(this))" class="button-control remove-button">×</button></div>',
+		process : '<div id="processNO" class="line item"><select class="form-control var-list" id="process1Var"  onchange="writeCode()"></select><span>Prend la valeur</span><input type="text" name="calculus" class="form-control short process-element" onchange="writeCode(); checkVariable($(this))"><select class="form-control process-element" onchange="writeCode(); deleteIfNull($(this))"><option value=""></option><option value="+">+</option><option value="-">-</option><option value="*">&times;</option><option value="/">&divide;</option></select><input type="text" name="calculus" class="form-control short process-element" onchange="writeCode(); checkVariable($(this))"><button onclick="addProcessElement($(this).parent()); writeCode();" class="button-control element-adder">+</button><button onclick="delLine($(this))" class="button-control remove-button">×</button></div>',
+		output : '<div id="outputNO" class="line item"><span>Afficher </span><input type="text" class="form-control"  onchange="writeCode()"><select class="form-control swicher"  onchange="swichOutputMode($(this).parent())"><option value="text">Texte</option><option value="var">Variable</option></select><button onclick="delLine($(this))" class="button-control remove-button">×</button></div>'
 	}
-	$("#"+type).append('<button onclick="delLastLine(\''+type+'\')" class="button-control remove-button">&times;</button>')
-	if (type == 'var') {
+	$("#"+type).append(lines[type]);
+
+	var newNbrLine = $("#"+type+" .line").length;
+	$("#"+type+"NO").attr("id", getNewId(type));
+
+	setVariableLists();
+	writeCode();
+}
+function getNewId(type){
+	var no = -1
+	for(var i = 1; i <= getLinesNumber(type); i++){
+		if($("#" + type + i).val() == undefined){
+			no = i;
+		}
+	}
+	if(no == -1){ //If no is still undefined
+		no = getLinesNumber(type)+1;
+	}
+	return type+no
+}
+function delLine(line){
+	line.parent().fadeOut(100,function(){
+		line.parent().remove();
 		setVariableLists()
-	}
-	writeCode()
+		writeCode()
+	});
 }
 function delLastLine(type){
 	var nbrLine = $("#"+type+" .line").length
@@ -34,24 +51,11 @@ function delLastLine(type){
 	}
 	writeCode()
 }
-function swichOutputMode(id){
-	if($('#output' + id + ' input').length == 1){
-		$('#output' + id + ' input').remove()
-		$('#output' + id + ' span').after('<select class="form-control var-list" onchange="writeCode()"></select>')
-		 setVariableLists()
-	} else if($('#output' + id + ' select').length == 2){
-		$('#output' + id + ' select')[0].remove()
-		$('#output' + id + ' span').after('<input type="text" class="form-control"  onchange="writeCode()" width="">')
-		 setVariableLists()
-	}
-	writeCode()
-}
 function getValues(type,formType){
-	arrayReturned = []
-	length = $("#"+type+" "+formType).length
+	var arrayReturned = []
 	var tempValue
-	for (var i=1;i<=length;i++) {
-		tempValue = $("#"+type+i+" "+formType).val()
+	for (var i = 0; i < getLinesNumber("var") ; i++) {
+		tempValue = $("#"+get_line_id(i,"var")+" "+formType).val()
 		if (tempValue != "") {
 			arrayReturned.push(tempValue)
 		}
@@ -60,7 +64,7 @@ function getValues(type,formType){
 }
 function setVariableLists(){
 	$(".var-list option").remove()
-	for (var i = getValues('var','input').length - 1; i >= 0; i--) {
+	for (var i = 0; i < getValues('var','input').length; i++) {
 		$(".var-list").append('<option value="'+getValues('var','input')[i]+'">'+getValues('var','input')[i]+'</option>')
 	}
 }
@@ -71,9 +75,7 @@ function writeCode(){
 	CodeMirrorInstance.setValue("") //We clean the output
 	//Variables & input
 	for(var i = 0; i < getLinesNumber("var") ; i++){ //For each variable
-		console.log(i)
 		if ($("#" + get_line_id(i,"var") + " input").val() && $("#" + get_line_id(i,"var") + " input").val()  != '') {
-			console.log("s")
 			if (getValues("input","select").includes($("#" + get_line_id(i,"var") + " input").val())) {//if element is input list
 				CodeMirrorInstance.setValue(
 					CodeMirrorInstance.getValue() + $("#" + get_line_id(i,"var") + " input").val() + " = "+ $("#" + get_line_id(i,"var") + " select").val() + "(input('> ')) \n")
@@ -131,7 +133,6 @@ function toggleMenu(){
 	});
 }
 function deleteIfNull(list){
-	console.log(list.val())
 	if (list.val() == "") {
 		if (list.next().is("input")) {
 			list.next().remove()
@@ -156,26 +157,38 @@ function checkVariable(input){
 	}
 	
 }
-function addProcessElement(id){
-	var lastElement = $(last_of_array($(".process-element")))
+function addProcessElement(line){
+	var lastElement = $(last_of_array($("#" + $(line).attr('id') + " .process-element")))
 	if (lastElement.is("select")) {
-		$('<input type="text" name="calculus" class="form-control short process-element" onchange="writeCode(); checkVariable($(this))">').insertBefore("#process" + id + " .element-adder");
+		$('<input type="text" name="calculus" class="form-control short process-element" onchange="writeCode(); checkVariable($(this))">').insertBefore("#" + $(line).attr('id') + " .element-adder");
 	} else{
 		$('<select class="form-control process-element" onchange="writeCode(); deleteIfNull($(this))"><option value=""></option><option value="+">+</option><option value="-">-</option><option value="*">&times;</option><option value="/">&divide;</option></select>'
-			).insertBefore("#process" + id + " .element-adder");
+			).insertBefore("#" + $(line).attr('id') + " .element-adder");
 	}
 }
+function swichOutputMode(line){
+
+	if($('#' + $(line).attr('id') + ' input').length == 1){
+		$('#' + $(line).attr('id') + ' input').remove()
+		$('#' + $(line).attr('id') + ' span').after('<select class="form-control var-list" onchange="writeCode()"></select>')
+	} else if($('#' + $(line).attr('id') + ' select').length == 2){
+		$('#' + $(line).attr('id') + ' select')[0].remove()
+		$('#' + $(line).attr('id') + ' span').after('<input type="text" class="form-control"  onchange="writeCode()" width="">')
+	}
+	setVariableLists()
+	writeCode()
+}
 $(function() {
-	setVariableLists();
 	//Making elements tiles sortable
 	$('.element').sortable();
 	//Making sure everithing is coordinated in the ouput
 	$("#output .swicher").val("text")
 	$('.CodeMirror').height($('#inputForm').outerHeight()-2)
-	$( ".element" ).sortable({
-  		update: function( event, ui ) {writeCode();}
-	});
+	setVariableLists();
 	writeCode();
+});
+$( ".element" ).sortable({
+  	update: function( event, ui ) {setVariableLists(); writeCode(); }
 });
 $( window ).resize(function() {
  	$("nav").css({
@@ -197,5 +210,4 @@ $( window ).scroll(function() {
 
 function last_of_array(array){return array[array.length-1]}
 
-function get_line_id(index, type){console.log(index + " " + type); return $("#"+type).sortable("toArray")[index]}
-/*function get_line_id(index, type){console.log(index + " " + type); return "var1"}*/
+function get_line_id(index, type){return $("#"+type).sortable("toArray")[index]}
