@@ -54,8 +54,8 @@ function delLastLine(type){
 function getValues(type,formType){
 	var arrayReturned = []
 	var tempValue
-	for (var i = 0; i < getLinesNumber("var") ; i++) {
-		tempValue = $("#"+get_line_id(i,"var")+" "+formType).val()
+	for (var i = 0; i < getLinesNumber(type) ; i++) {
+		tempValue = $("#"+get_line_id(i,type)+" "+formType).val()
 		if (tempValue != "") {
 			arrayReturned.push(tempValue)
 		}
