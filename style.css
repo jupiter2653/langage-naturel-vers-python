@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans+HK:300&display=swap');body{
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+HK:300&display=swap');
+body{
 	font-family: 'Noto Sans HK', sans-serif;
 }
 body, html{
@@ -192,6 +193,7 @@ h2{
 	top: -1px;
 	right:5px;
 	border:0px;
+	background-color: transparent;
 }
 .pull-right{
 	display: block;
@@ -217,6 +219,20 @@ h2{
 }
 .line-adder:active{
 	box-shadow: none;
+}
+.error{
+	text-align: center;
+	background-color: rgb(255,50,50);
+	border: 1px solid red;
+	border-radius: 15px;
+	margin: auto;
+	position: absolute;
+	top: 10px;
+	left: 50%;
+	transform: translate(-50%,0);
+	width: 90%;
+	z-index: 1000;
+	padding: 5px;
 }
 @media screen and (max-width: 1000px) {
 	section{
