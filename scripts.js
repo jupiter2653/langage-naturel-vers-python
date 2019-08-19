@@ -12,10 +12,10 @@ function addLine(type){
 	}
 	$("#"+type).append(lines[type]);
 
-	var newNbrLine = $("#"+type+" .line").length;
-	$("#"+type+"NO").attr("id", getNewId(type));
+	var newId = getNewId(type);
+	$("#"+type+"NO").attr("id", newId);
 
-	setVariableLists();
+	setVariableLists($("#" + newId));
 	writeCode();
 }
 function getNewId(type){
@@ -47,7 +47,7 @@ function delLastLine(type){
 		$("#"+type +" .remove-button").remove();
 	}
 	if (type == 'var') {
-		setVariableLists()
+		setVariableLists(undefined) //TODO : mettre en 2ieme argument la variable quil faut supprimer
 	}
 	writeCode()
 }
@@ -62,10 +62,17 @@ function getValues(type,formType){
 	}
 	return arrayReturned
 }
-function setVariableLists(){
-	$(".var-list option").remove()
-	for (var i = 0; i < getValues('var','input').length; i++) {
-		$(".var-list").append('<option value="'+getValues('var','input')[i]+'">'+getValues('var','input')[i]+'</option>')
+function setVariableLists(element, variable){ //TODO : mettre en 2ieme argument la variable quil faut supprimer
+	if (element == undefined) {
+		$(".var-list option").remove()
+		for (var i = 0; i < getValues('var','input').length; i++) {
+			$(".var-list").append('<option value="'+getValues('var','input')[i]+'">'+getValues('var','input')[i]+'</option>')
+		}
+	} else if(element != undefined && variable == undefined){ 
+		element.children(".var-list").children("option").remove()
+		for (var i = 0; i < getValues('var','input').length; i++) {
+			element.children(".var-list").append('<option value="'+getValues('var','input')[i]+'">'+getValues('var','input')[i]+'</option>')
+		}
 	}
 }
 function getLinesNumber(type){
@@ -188,7 +195,7 @@ $(function() {
 	writeCode();
 });
 $( ".element" ).sortable({
-  	update: function( event, ui ) {setVariableLists(); writeCode(); }
+  	update: function( event, ui ) {writeCode();}
 });
 $( window ).resize(function() {
  	$("nav").css({
