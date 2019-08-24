@@ -156,12 +156,15 @@ h2{
 	font-size: 14px;
 	padding-left: 20px;
 	position: relative;
+	padding-right: 30px;
 }
 .item{
 	border: 1px #cbcb solid;
 	background-color: white;
 	box-shadow: 2px 2px 2px rgba(0,0,0,.2);
 	margin-top: 5px;
+	display: flex;
+	flex-wrap: wrap;
 }
 .line::before{
 	content: "drag_indicator";
@@ -170,6 +173,8 @@ h2{
 	color: grey;
 	position: absolute;
 	left: 2px;
+	top: 50%;
+	transform: translate(0,-50%);
 	cursor: move;
 }
 .oneChar{
@@ -234,6 +239,9 @@ h2{
 	width: 90%;
 	z-index: 1000;
 	padding: 5px;
+}
+.line *{
+	margin:1px;
 }
 @media screen and (max-width: 1000px) {
 	section{
