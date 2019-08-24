@@ -193,6 +193,9 @@ $(function() {
 	$('.CodeMirror').height($('#inputForm').outerHeight()-2)
 	setVariableLists();
 	writeCode();
+	$("nav").css({
+			top: $("header").outerHeight()-$( window ).scrollTop() //Makes the menu stick the header
+		})
 });
 $( ".element" ).sortable({
   	update: function( event, ui ) {writeCode();}
