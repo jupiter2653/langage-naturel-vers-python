@@ -85,7 +85,7 @@ function writeCode(){
 		if ($("#" + get_line_id(i,"var") + " input").val() && $("#" + get_line_id(i,"var") + " input").val()  != '') {
 			if (getValues("input","select").includes($("#" + get_line_id(i,"var") + " input").val())) {//if element is input list
 				CodeMirrorInstance.setValue(
-					CodeMirrorInstance.getValue() + $("#" + get_line_id(i,"var") + " input").val() + " = "+ $("#" + get_line_id(i,"var") + " select").val() + "(input('> ')) \n")
+					CodeMirrorInstance.getValue() + $("#" + get_line_id(i,"var") + " input").val() + " = "+ $("#" + get_line_id(i,"var") + " select").val() + "(input('Entrez "+ $("#" + get_line_id(i,"var") + " input").val() +" :')) \n")
 			} else{
 				CodeMirrorInstance.setValue(
 					CodeMirrorInstance.getValue() + $("#" + get_line_id(i,"var") + " input").val() + " = " + $("#" + get_line_id(i,"var") + " select").val() + "() \n")
@@ -194,8 +194,9 @@ $(function() {
 	setVariableLists();
 	writeCode();
 	$("nav").css({
-			top: $("header").outerHeight()-$( window ).scrollTop() //Makes the menu stick the header
-		})
+		top: $("header").outerHeight()-$( window ).scrollTop() //Makes the menu stick the header
+	})
+	$(".line-adder").outerHeight($(".line-adder").outerWidth()) //Chrome bug
 });
 $( ".element" ).sortable({
   	update: function( event, ui ) {writeCode();}

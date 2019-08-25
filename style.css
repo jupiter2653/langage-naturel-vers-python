@@ -193,13 +193,17 @@ h2{
 	cursor: pointer;
 }
 .remove-button{
-	height:25px;
-	font-size: 1.1em;
+	font-size: 25px;
 	position:absolute;
-	top: -1px;
-	right:5px;
-	border:0px;
+	top: 50%;
+	transform: translate(0px, -50%);
+	right: 0px;
+	border: 0px;
 	background-color: transparent;
+	font-family: arial, sans-serif;
+	font-weight: normal;
+	color: grey;
+	padding-bottom: 3px;
 }
 .pull-right{
 	display: block;
