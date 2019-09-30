@@ -5,10 +5,10 @@ var CodeMirrorInstance = CodeMirror.fromTextArea(textArea,{mode : "text/x-python
 
 function addLine(type){
 	const lines = {
-		var : '<div id="varNO" class="line item"><input onchange="setVariableLists();  writeCode();" type="text" name="variables" class="oneChar form-control" maxlength="1"><span>est un(e)</span><select class="form-control" onchange="writeCode()"><option value="int">Entier</option><option value="float">Flottant</option><option value="str">Chaine de charactère</option></select><button onclick="delLine($(this))" class="button-control remove-button">×</button></div>',
-		input : '<div id="inputNO" class="line item"><span>Demander </span><select class="form-control var-list" onchange="writeCode()"></select><button onclick="delLine($(this))" class="button-control remove-button">×</button></div>',
-		process : '<div id="processNO" class="line item"><select class="form-control var-list" id="process1Var"  onchange="writeCode()"></select><span>Prend la valeur</span><input type="text" name="calculus" class="form-control short process-element" onchange="writeCode(); checkVariable($(this))"><select class="form-control process-element" onchange="writeCode(); deleteIfNull($(this))"><option value=""></option><option value="+">+</option><option value="-">-</option><option value="*">&times;</option><option value="/">&divide;</option></select><input type="text" name="calculus" class="form-control short process-element" onchange="writeCode(); checkVariable($(this))"><button onclick="addProcessElement($(this).parent()); writeCode();" class="button-control element-adder">+</button><button onclick="delLine($(this))" class="button-control remove-button">×</button></div>',
-		output : '<div id="outputNO" class="line item"><span>Afficher </span><input type="text" class="form-control"  onchange="writeCode()"><select class="form-control swicher"  onchange="swichOutputMode($(this).parent())"><option value="text">Texte</option><option value="var">Variable</option></select><button onclick="delLine($(this))" class="button-control remove-button">×</button></div>'
+		var : '<div id="varNO" class="line item"><span class="line_handle">drag_indicator</span><input onchange="setVariableLists();  writeCode();" type="text" name="variables" class="oneChar form-control" maxlength="1"><span>est un(e)</span><select class="form-control" onchange="writeCode()"><option value="int">Entier</option><option value="float">Flottant</option><option value="str">Chaine de charactère</option></select><button onclick="delLine($(this))" class="button-control remove-button">×</button></div>',
+		input : '<div id="inputNO" class="line item"><span class="line_handle">drag_indicator</span><span>Demander </span><select class="form-control var-list" onchange="writeCode()"></select><button onclick="delLine($(this))" class="button-control remove-button">×</button></div>',
+		process : '<div id="processNO" class="line item"><span class="line_handle">drag_indicator</span><select class="form-control var-list" id="process1Var"  onchange="writeCode()"></select><span>Prend la valeur</span><input type="text" name="calculus" class="form-control short process-element" onchange="writeCode(); checkVariable($(this))"><select class="form-control process-element" onchange="writeCode(); deleteIfNull($(this))"><option value=""></option><option value="+">+</option><option value="-">-</option><option value="*">&times;</option><option value="/">&divide;</option></select><input type="text" name="calculus" class="form-control short process-element" onchange="writeCode(); checkVariable($(this))"><button onclick="addProcessElement($(this).parent()); writeCode();" class="button-control element-adder">+</button><button onclick="delLine($(this))" class="button-control remove-button">×</button></div>',
+		output : '<div id="outputNO" class="line item"><span class="line_handle">drag_indicator</span><span>Afficher </span><input type="text" class="form-control"  onchange="writeCode()"><select class="form-control swicher"  onchange="swichOutputMode($(this).parent())"><option value="text">Texte</option><option value="var">Variable</option></select><button onclick="delLine($(this))" class="button-control remove-button">×</button></div>'
 	}
 	$("#"+type).append(lines[type]);
 
@@ -187,7 +187,9 @@ function swichOutputMode(line){
 }
 $(function() {
 	//Making elements tiles sortable
-	$('.element').sortable();
+	$('.element').sortable({
+	  handle: ".line_handle"
+	});
 	//Making sure everithing is coordinated in the ouput
 	$("#output .swicher").val("text")
 	$('.CodeMirror').height($('#inputForm').outerHeight()-2)

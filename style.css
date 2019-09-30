@@ -166,8 +166,7 @@ h2{
 	display: flex;
 	flex-wrap: wrap;
 }
-.line::before{
-	content: "drag_indicator";
+.line_handle{
 	font-family: 'Material Icons';
 	font-size: 17px;
 	color: grey;
