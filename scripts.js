@@ -177,10 +177,10 @@ function swichOutputMode(line){
 
 	if($('#' + $(line).attr('id') + ' input').length == 1){
 		$('#' + $(line).attr('id') + ' input').remove()
-		$('#' + $(line).attr('id') + ' span').after('<select class="form-control var-list" onchange="writeCode()"></select>')
+		$($('#' + $(line).attr('id') + ' span')[1]).after('<select class="form-control var-list" onchange="writeCode()"></select>')
 	} else if($('#' + $(line).attr('id') + ' select').length == 2){
 		$('#' + $(line).attr('id') + ' select')[0].remove()
-		$('#' + $(line).attr('id') + ' span').after('<input type="text" class="form-control"  onchange="writeCode()" width="">')
+		$($('#' + $(line).attr('id') + ' span')[1]).after('<input type="text" class="form-control"  onchange="writeCode()" width="">')
 	}
 	setVariableLists()
 	writeCode()
