@@ -90,20 +90,38 @@ function writeCode(){
 				CodeMirrorInstance.setValue(
 					CodeMirrorInstance.getValue() + $("#" + get_line_id(i,"var") + " input").val() + " = " + $("#" + get_line_id(i,"var") + " select").val() + "() \n")
 			}
+			$("#" + get_line_id(i,"var") + " input").attr("value",$("#" + get_line_id(i,"var") + " input").val());
 		}
 	}
 	//Process
 	for(var i = 0; i < getLinesNumber("process") ; i++){ //Foreach process element
+		if(get_var_type($("#" + get_line_id(i,"process") + " select").val()) == "str" &&  $("#" + get_line_id(i,"process") + " .text-element").length == 0){
+		//If its a string, then string input
+			$('#'+get_line_id(i,"process") + ' .process-element, #' + get_line_id(i,"process") + ' .element-adder').remove()
+			$('#'+get_line_id(i,"process")).append(" <input type=\"text\" class=\"process-element text-element form-control\" onchange=\"writeCode()\"></input>")
+			inputType = 'str'
+		}
+
+		else if(get_var_type($("#" + get_line_id(i,"process") + " select").val()) != "str" &&  $("#" + get_line_id(i,"process") + " .short").length == 0){
+			//if not a string
+			$('#'+get_line_id(i,"process") + ' .process-element').remove()
+			$('#'+get_line_id(i,"process")).append(' <input type="text" name="calculus" class="form-control short process-element" onchange="writeCode(); checkVariable($(this))"><select class="form-control process-element" onchange="writeCode(); deleteIfNull($(this))"><option value=""></option><option value="+">+</option><option value="-">-</option><option value="*">&times;</option><option value="/">&divide;</option></select><input type="text" name="calculus" class="form-control short process-element" onchange="writeCode(); checkVariable($(this))"><button onclick="addProcessElement($(this).parent()); writeCode();" class="button-control element-adder">+</button>');
+		}
 		if($("#" + get_line_id(i,"process") + " select").val() && $("#" + get_line_id(i,"process") + " select").val()  != null){
 			CodeMirrorInstance.setValue(
 						CodeMirrorInstance.getValue() + $("#" + get_line_id(i,"process") + " select").val() + " = ") // To improve
 
-			for (var j = 0; j < $("#"+ get_line_id(i,"process") + " .process-element").length ; j++) {
-				/*$($("#process" + i + " .process-element")[j])*/
+			if(get_var_type($("#" + get_line_id(i,"process") + " select").val()) == 'str'){
 				CodeMirrorInstance.setValue(
-						CodeMirrorInstance.getValue() + $($("#" + get_line_id(i,"process") + " .process-element")[j]).val())
+						CodeMirrorInstance.getValue() + '"' + $("#" + get_line_id(i,"process") + " .process-element").val() + '"')
 			}
-
+			else{
+				for (var j = 0; j < $("#"+ get_line_id(i,"process") + " .process-element").length ; j++) {
+					/*$($("#process" + i + " .process-element")[j])*/
+					CodeMirrorInstance.setValue(
+							CodeMirrorInstance.getValue() + $($("#" + get_line_id(i,"process") + " .process-element")[j]).val())
+				}
+			}
 			CodeMirrorInstance.setValue(
 						CodeMirrorInstance.getValue() + "\n")
 		}
@@ -224,3 +242,4 @@ $( window ).scroll(function() {
 function last_of_array(array){return array[array.length-1]}
 
 function get_line_id(index, type){return $("#"+type).sortable("toArray")[index]}
+function get_var_type(varName){return $("input[value=" + varName + "]").parent().children("select").val()}
